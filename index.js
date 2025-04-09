@@ -8,7 +8,8 @@ app.post("/generate-hash", (req, res) => {
   const secret = process.env.SECRET_KEY;
   const keys = Object.keys(req.body).sort();
   const data = keys.map(k => req.body[k]).join("|");
-  const hash = crypto.createHmac("sha512", secret).update(data).digest("hex");
+  // Utilisation de "base64" au lieu de "hex"
+  const hash = crypto.createHmac("sha512", secret).update(data).digest("base64");
 
   res.json({ hash });
 });
